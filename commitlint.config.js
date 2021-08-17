@@ -47,20 +47,33 @@ module.exports = {
       2,
       'always',
       [
+        // 新功能
         'feat',
+        // 修补bug
         'fix',
+        // 优化相关，如提升性能、用户体验等
         'perf',
+        // 仅仅是对格式进行修改，如逗号、缩进、空格等。不改变代码逻辑
         'style',
+        // 文档(documentation)
         'docs',
+        // 测试用例，包括单元测试、集成测试。
         'test',
+        // 代码重构，没有新增功能或修复bug
         'refactor',
         'build',
         'ci',
+        //  改变构建流程、或者增加依赖库、工具等
         'chore',
+        // 版本回滚
         'revert',
         'wip',
         'workflow',
         'types',
+        // 用于说明 commit 影响的范围，比如: views, component, utils, test...
+        'scope',
+        // commit 目的的简短描述
+        'subject',
       ],
     ],
   },

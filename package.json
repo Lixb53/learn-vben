@@ -13,7 +13,8 @@
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
     "lint:pretty": "pretty-quick --staged",
     "install:husky": "is-ci || husky install",
-    "postinstall": "npm run install:husky"
+    "postinstall": "npm run install:husky",
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
     "autoclean": "^1.0.2",
@@ -29,11 +30,13 @@
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.3.1",
     "commitizen": "^4.2.4",
+    "conventional-changelog-cli": "^2.1.1",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.16.0",
+    "global": "^4.4.0",
     "husky": "^7.0.1",
     "is-ci": "^3.0.0",
     "lint-staged": "^11.1.2",

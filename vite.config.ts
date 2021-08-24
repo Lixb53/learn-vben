@@ -1,19 +1,94 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import type { UserConfig, ConfigEnv } from 'vite';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-});
+import { loadEnv } from 'vite';
+import { resolve } from 'path';
 
-import path$1 from 'path';
-const fs$2 = require('fs');
+import { wrapperEnv } from './build/utils';
+import { createProxy } from './build/vite/proxy';
+import { OUTPUT_DIR } from './build/constant';
+import { generateModifyVars } from './build/generate/generateModifyVars';
+import { createVitePlugins } from './build/vite/plugin';
 
-function _interopDefaultLegacy(e) {
-  return e && typeof e === 'object' && 'default' in e ? e['default'] : e;
+import pkg from './package.json';
+import moment from 'moment';
+
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir);
 }
 
-const path__default = /*#__PURE__*/ _interopDefaultLegacy(path$1);
-const fs__default = /*#__PURE__*/ _interopDefaultLegacy(fs$2);
+const { dependencies, devDependencies, name, version } = pkg;
+const __APP_INFO__ = {
+  pkg: { dependencies, devDependencies, name, version },
+  lastBuildTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+};
 
-console.log(path__default, fs__default);
+export default ({ command, mode }: ConfigEnv): UserConfig => {
+  const root = process.cwd();
+  const env = loadEnv(mode, root);
+  const viteEnv = wrapperEnv(env);
+
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv;
+
+  const isBuild = command === 'build';
+
+  return {
+    base: VITE_PUBLIC_PATH,
+    root,
+    resolve: {
+      alias: [
+        {
+          find: /\/@\//,
+          replacement: pathResolve('src') + '/',
+        },
+        // /#/xxxx => types/xxxx
+        {
+          find: /\/#\//,
+          replacement: pathResolve('types') + '/',
+        },
+      ],
+    },
+    server: {
+      host: true,
+      port: VITE_PORT,
+      proxy: createProxy(VITE_PROXY),
+    },
+    build: {
+      target: 'es2015',
+      outDir: OUTPUT_DIR,
+      terserOptions: {
+        compress: {
+          keep_infinity: true,
+          drop_console: VITE_DROP_CONSOLE,
+        },
+      },
+      brotliSize: false,
+      chunkSizeWarningLimit: 2000,
+    },
+    define: {
+      __INTLIFY_PROD_DEVTOOLS__: false,
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
+    },
+    css: {
+      preprocessorOptions: {
+        less: {
+          modifyVars: {
+            // 用于全局导入，以避免需要单独导入每个样式文件。
+            // reference:  避免重复引用
+            ...generateModifyVars(),
+          },
+          javascriptEnabled: true,
+        },
+      },
+    },
+    plugins: createVitePlugins(viteEnv, isBuild),
+    optimizeDeps: {
+      include: [
+        '@iconify/iconify',
+        'ant-design-vue/es/locale/zh_CN',
+        'ant-design-vue/es/locale/en_US',
+        'moment/dist/locale/zh-cn',
+        'moment/dist/locale/eu',
+      ],
+    },
+  };
+};

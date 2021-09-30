@@ -1,62 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <div class="viteport">{{ vitePort }}</div>
-  <div class="viteport1">{{ vitePort }}</div>
-  <svg-icon name="sun" />
-  <Button type="primary">Primary Button</Button>
-  <Menu />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <!-- <Layout /> -->
+  <ConfigProvider :locale="getAntdLocale">
+    <AppProvider>
+      <RouterView />
+    </AppProvider>
+  </ConfigProvider>
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted, ref } from 'vue';
-  import HelloWorld from '/@/components/HelloWorld.vue';
-  import axios from 'axios';
-  import { Button } from 'ant-design-vue';
-  // import { changeTheme } from './logics/theme';
-  import Menu from './components/menu.vue';
+  import { defineComponent } from 'vue';
+  import { ConfigProvider } from 'ant-design-vue';
+  import { AppProvider } from '@/components/Application';
+  import { useTitle } from '@/hooks/web/useTitle';
+  import { useLocale } from '@/locales/useLocale';
   export default defineComponent({
     name: 'App',
     components: {
-      HelloWorld,
-      Button,
-      Menu,
+      ConfigProvider,
+      AppProvider,
     },
     setup() {
-      console.log(import.meta);
-      let title: string = import.meta.env.VITE_GLOB_APP_TITLE as string;
-      document.title = title;
-      const vitePort = ref(import.meta.env.VITE_PORT);
-      onMounted(() => {
-        axios.get('/basic-api/tree/getDemoOptions').then((res) => {
-          console.log(res);
-          // let t = changeTheme('red');
-        });
-      });
+      const { getAntdLocale } = useLocale();
+      useTitle();
       return {
-        vitePort,
+        getAntdLocale,
       };
     },
   });
 </script>
-
-<style>
-  #app {
-    margin-top: 60px;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-    text-align: center;
-  }
-
-  .viteport {
-    position: absolute;
-    height: 50px;
-  }
-
-  .viteport1 {
-    position: absolute;
-    height: 50px;
-  }
-</style>

@@ -77,6 +77,7 @@ export function findPath<T = any>(
   config: Partial<TreeHelperConfig> = {}
 ): T | T[] | null {
   config = getConfig(config);
+  console.log(config, tree, func);
   const path: T[] = [];
   const list = [...tree];
   const visitedSet = new Set();

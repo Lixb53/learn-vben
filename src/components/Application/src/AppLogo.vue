@@ -1,16 +1,16 @@
 <template>
   <div class="anticon" :class="getAppLogoClass">
     <img src="../../../assets/logo.png" alt="" srcset="" />
-    <div :class="getTitleClass"> VSAP </div>
+    <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
+      {{ title }}
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent } from 'vue';
-  // 拿到全局配置信息
-  // import { useGlobSetting } from '@/hooks/setting';
-  // import { useGo } from '@/hooks/web/usePage';
+  import { computed, defineComponent, unref } from 'vue';
   import { useDesign } from '@/hooks/web/useDesign';
+  import { useMenuSetting } from '@/hooks/setting/useMenuSetting';
 
   const props = {
     /**
@@ -32,13 +32,14 @@
     props: props,
     setup: (props) => {
       const { prefixCls } = useDesign('app-logo');
+      const { getCollapsedShowTitle } = useMenuSetting();
       const title = 'VSAP';
       // const go = useGo();
 
       const getAppLogoClass = computed(() => [
         prefixCls,
         props.theme,
-        { 'collapsed-show-title': true },
+        { 'collapsed-show-title': unref(getCollapsedShowTitle) },
       ]);
 
       const getTitleClass = computed(() => [

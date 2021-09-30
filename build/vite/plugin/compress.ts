@@ -10,7 +10,6 @@ export function configCompressPlugin(
   compress: 'gzip' | 'brotli' | 'none',
   deleteOriginFile = false
 ): Plugin | Plugin[] {
-  console.log(compress);
   compress = compress || [];
   const compressList = compress.split(',');
 

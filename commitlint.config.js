@@ -4,7 +4,7 @@ module.exports = {
   // ↓按照传统消息格式来验证
   extends: ['@commitlint/config-conventional'],
   // ↓这里是自定义解析器
-  // ↓https://commitlint.js.org/#/reference-configuration?id=parser-presets
+  // ↓https://commitlint.js.org#/reference-configuration?id=parser-presets
   parserPreset: {
     parserOpts: {
       headerPattern: /^(\w*|[\u4e00-\u9fa5]*)(?:[\(\（](.*)[\)\）])?[\:\：] (.*)/,

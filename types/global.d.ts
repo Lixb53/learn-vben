@@ -99,3 +99,9 @@ declare module 'vue' {
     | { new (): ComponentPublicInstance<Props> }
     | FunctionalComponent<Props>;
 }
+
+declare module '*.json' {
+  const value: string;
+  export default value;
+}
+// declare type Recordable = Record<string, any>;

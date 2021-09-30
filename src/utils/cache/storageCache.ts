@@ -1,10 +1,10 @@
-import { cacheCipher } from '/@/settings/encryptionSetting';
+import { cacheCipher } from '@/settings/encryptionSetting';
 
-import type { EncryptionParams } from '/@/utils/cipher';
+import type { EncryptionParams } from '@/utils/cipher';
 
-import { AesEncryption } from '/@/utils/cipher';
+import { AesEncryption } from '@/utils/cipher';
 
-import { isNullOrUnDef } from '/@/utils/is';
+import { isNullOrUnDef } from '@/utils/is';
 
 // 创建缓存的参数
 export interface CreateStorageParams extends EncryptionParams {
@@ -34,8 +34,8 @@ export const createStorage = ({
   /**
    *Cache class
    *Construction parameters can be passed into sessionStorage, localStorage,
-   * @class Cache
-   * @example
+   * @/class Cache
+   * @/example
    */
   const WebStorage = class WebStorage {
     // 存储库
@@ -48,7 +48,7 @@ export const createStorage = ({
     private hasEncrypt: boolean;
     /**
      *
-     * @param {*} storage
+     * @/param {*} storage
      */
     constructor() {
       this.storage = storage;
@@ -65,10 +65,10 @@ export const createStorage = ({
     /**
      *
      *  Set cache
-     * @param {string} key
-     * @param {*} value
-     * @expire Expiration time in seconds
-     * @memberof Cache
+     * @/param {string} key
+     * @/param {*} value
+     * @/expire Expiration time in seconds
+     * @/memberof Cache
      */
     // 设置一个值
     set(key: string, value: any, expire: number | null = timeout) {
@@ -87,8 +87,8 @@ export const createStorage = ({
 
     /**
      *Read cache
-     * @param {string} key
-     * @memberof Cache
+     * @/param {string} key
+     * @/memberof Cache
      */
     get(key: string, def: any = null): any {
       const val = this.storage.getItem(this.getKey(key));
@@ -113,8 +113,8 @@ export const createStorage = ({
 
     /**
      * Delete cache based on key
-     * @param {string} key
-     * @memberof Cache
+     * @/param {string} key
+     * @/memberof Cache
      */
     remove(key: string) {
       this.storage.removeItem(this.getKey(key));

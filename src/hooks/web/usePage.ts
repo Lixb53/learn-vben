@@ -22,8 +22,7 @@ export function useGo(_router?: Router) {
   const { push, replace } = _router || router;
 
   function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = false) {
-    if (opt) return;
-
+    if (!opt) return;
     if (isString(opt)) {
       isReplace ? replace(opt).catch(handleError) : push(opt).catch(handleError);
     } else {
@@ -34,7 +33,7 @@ export function useGo(_router?: Router) {
   return go;
 }
 
-export const useRedo = (_router: Router) => {
+export const useRedo = (_router?: Router) => {
   let router;
   if (!_router) {
     router = useRouter();

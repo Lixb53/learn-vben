@@ -42,11 +42,13 @@ export default function mitt(all?: EventHandlerMap): Emitter {
   return {
     /**
      * A Map of event names to registered handler functions.
+     * 事件名称到已注册处理程序函数的映射。
      */
     all,
 
     /**
      * Register an event handler for the given type.
+     * 为给定类型注册一个事件处理程序。
      * @param {string|symbol} type Type of event to listen for, or `"*"` for all events
      * @param {Function} handler Function to call in response to given event
      * @memberOf mitt

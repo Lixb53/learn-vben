@@ -7,6 +7,12 @@ export const LOCALE: { [key: string]: LocaleType } = {
   EN_US: 'en',
 };
 
+/**
+ * @param showPicker 展示语言切换按钮
+ * @param locale 默认本地语言
+ * @param fallback 默认失败后的语言
+ * @param availableLocales 支持的语言
+ */
 export const localeSetting: LocaleSetting = {
   // 展示语言切换按钮
   showPicker: true,

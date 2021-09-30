@@ -49,12 +49,13 @@ export enum SessionTimeoutProcessingEnum {
  */
 export enum PermissionModeEnum {
   // role
-  // 角色模式
+  // 权限模式
   ROLE = 'ROLE',
   // black
   // 根据用户ID从后端获取
   BACK = 'BACK',
   // route mapping
+  // 路由映射
   ROUTE_MAPPING = 'ROUTE_MAPPING',
 }
 
